@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.app{
+    background-image: url('./assets/Background-image.webp');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    height: 100vh;
+    width: 100%;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); opacity: 0.7; }
+    50% { transform: translateY(-10px); opacity: 0.9; }
+    100% { transform: translateY(0); opacity: 0.7; }
+  }
+  
+  .particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    animation: float 4s infinite ease-in-out;
+  }
+  
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, -10px);
+    }
+    10% {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+    90% {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -10px);
+    }
+  }
+  
+  .popup-animation {
+    position: absolute;
+    top: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: fadeInOut 3s ease-in-out forwards;
+  }
+  
