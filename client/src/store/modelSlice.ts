@@ -1,4 +1,6 @@
 import { StateCreator } from "zustand"
+import { ModelType } from "../types"
+
 
 export interface ModelSliceTypes{
     //States
@@ -8,8 +10,11 @@ export interface ModelSliceTypes{
     xAxis: number ,
     yAxis: number ,
     zAxis: number ,
-    vertexCount: number ,
-    surfaceArea: number 
+    vertexCount: number,
+    surfaceArea: number,
+
+    modelUrl: string,
+    models: ModelType[] 
 
 
     //Actions
@@ -21,6 +26,8 @@ export interface ModelSliceTypes{
     setZAxis: (val: number) => void,
     setVertexCount: (count: number) => void,
     setSurfaceArea: (area: number) => void,
+    setModelUrl: (url: string) => void,
+    setModels: (models: ModelType[]) => void
 }
 
 export const modelSlice :StateCreator<ModelSliceTypes, [], [], ModelSliceTypes> = (set) => ({
@@ -33,6 +40,8 @@ export const modelSlice :StateCreator<ModelSliceTypes, [], [], ModelSliceTypes> 
     zAxis: 0, 
     vertexCount: 0,
     surfaceArea: 0,
+    modelUrl: "",
+    models: [],
     
     //Actions
     setFile: (file: File| null) => set(() => ({file: file})),
@@ -42,5 +51,7 @@ export const modelSlice :StateCreator<ModelSliceTypes, [], [], ModelSliceTypes> 
     setYAxis: (val: number) => set(() => ({yAxis: val})),
     setZAxis: (val: number) => set(() => ({zAxis: val})),
     setVertexCount: (count: number) => set(() => ({vertexCount: count})),
-    setSurfaceArea: (area: number) => set(() => ({surfaceArea: area}))
+    setSurfaceArea: (area: number) => set(() => ({surfaceArea: area})),
+    setModelUrl: (url: string) => set(() => ({modelUrl: url})),
+    setModels: (models: ModelType[]) => set(() => ({models: models}))
 })

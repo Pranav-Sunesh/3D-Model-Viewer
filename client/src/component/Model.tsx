@@ -63,11 +63,6 @@ const Model = ({ model }: ModelProps) => {
                 setZAxis(size.z);
                 setVertexCount(vertexCount);
                 setSurfaceArea(surfaceArea);
-                console.log("Mesh Name:", mesh.name || "Unnamed Mesh");
-                console.log("Material:", mesh.material);
-                console.log("Bounding Box Size:", size); // x, y, z size
-                console.log("Vertex Count:", vertexCount);
-                console.log("Surface Area:", surfaceArea);
             }
           })
     }, [scene])

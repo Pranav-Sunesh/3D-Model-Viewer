@@ -53,3 +53,6 @@
     animation: fadeInOut 3s ease-in-out forwards;
   }
   
+  .pagination{
+    scrollbar-width: thin;
+  }
