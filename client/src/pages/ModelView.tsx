@@ -5,6 +5,7 @@ import DescriptionBox from "../component/DescriptionBox";
 import Loading from "../component/Loading";
 import { ModelType } from "../types";
 import axios, { AxiosResponse } from "axios";
+import useFileExits from "../hooks/useFileExits";
 
 const ModelView = () => {
 
@@ -32,9 +33,11 @@ const ModelView = () => {
 
   const fetchURL = async(model: ModelType) => {
     const response: AxiosResponse = await axios.get(`http://localhost:5000/models/${model.uuid}`);
-    setModelUrl(response.data.url[0].url);
+    setModelUrl(response.data.url);
   }
 
+  const fileExist: boolean = useFileExits(modelUrl);
+  
   return (
     <div
       className="w-full h-full p-1"
@@ -61,7 +64,12 @@ const ModelView = () => {
                     className="w-2/3 h-full bg-white rounded flex justify-center items-center"
                     >
                       <Suspense fallback={<Loading />}>
-                        <Model model={modelUrl}/>
+                        {
+                          fileExist?
+                          <Model model={modelUrl}/>
+                          :
+                          <p>File not available</p>
+                        }
                       </Suspense>
                   </div>
 
@@ -87,7 +95,7 @@ const ModelView = () => {
               >
                 {models.map((model: ModelType, index) => (
                   <button
-                    className="w-10 h-10 bg-white hover:bg-gray-100 active:bg-gray-200 justify-center inline-block items-center rounded"
+                    className="w-10 h-10 font-semibold bg-white hover:bg-gray-100 active:bg-gray-200 justify-center inline-block items-center rounded"
                     onClick={() => fetchURL(model)}
                     key={index}>
                       {index + 1}

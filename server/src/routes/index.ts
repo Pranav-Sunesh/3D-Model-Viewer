@@ -8,6 +8,6 @@ const router = Router();
 
 router.post('/upload', upload.single('file'), uploadController);
 router.get('/models', modelControllers);
-router.get('/models/:id', modelIdControllers)
+router.get('/models/:id', modelIdControllers);
 
 export default router

@@ -1,8 +1,9 @@
 import { Canvas} from "@react-three/fiber";
 import { Bounds, OrbitControls, Environment, Center, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
-import { useEffect } from "react";
+import { useEffect, useRef} from "react";
 import useStore from "../store/store";
+import { VRButton } from "three/examples/jsm/Addons.js";
 
 interface ModelProps {
   model: string;
@@ -11,6 +12,8 @@ interface ModelProps {
 const Model = ({ model }: ModelProps) => {
 
   const { scene } = useGLTF(model);
+
+  const canvasRef = useRef(null);
   
     const setName: (name: string) => void = useStore(state =>state.setName);
     const setMeshName: (name: string) => void = useStore(state => state.setMeshName);
@@ -67,22 +70,37 @@ const Model = ({ model }: ModelProps) => {
           })
     }, [scene])
 
-  return (
-    <Canvas>
+    useEffect(() => {
+      if (canvasRef.current) {
+        
+        const gl = canvasRef.current;
+        if (gl.xr) {
+          gl.xr.enabled = true;
+          // Attach the VRButton to Description box
+          document.querySelector('#description-box')?.appendChild(VRButton.createButton(gl));
+        } else {
+          console.error("WebXR not supported");
+        }
+      }
 
+    }, []);
+
+  return (
+    <Canvas ref={canvasRef} gl={{ antialias: true }} onCreated={({ gl }) => { gl.xr.enabled = true; }}>
       <ambientLight intensity={0.5} />
       <directionalLight intensity={1} position={[5, 5, 5]} />
       <hemisphereLight intensity={0.15} groundColor='black' />
       <spotLight position={[0, -10, 10]} angle={0.22} penumbra={1} intensity={2} castShadow shadow-mapSize={1024} />
 
-      <Bounds fit clip observe margin={1}>
+      <Bounds key={model} fit clip observe margin={1}>
         <Center>
             <primitive object={scene} dispose={null} />
         </Center>
       </Bounds>
 
-      <Environment preset="sunset" />
+      <Environment preset="warehouse" />
       <OrbitControls />
+
     </Canvas>
   );
 };

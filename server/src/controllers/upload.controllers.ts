@@ -4,13 +4,13 @@ import fs from "fs";
 import fsPromises from "fs/promises";
 import unzipper from "unzipper";
 import { findGLTFFile } from "../services/findGLTF";
-import db from "../config/db";
+import { db } from "../config/db";
 
 const insertModelToDB = (uuid: string, filename: string, res: Response) => {
   const url = `http://localhost:5000/models/${uuid}/${filename}`;
   const SQL = "INSERT INTO models (uuid, url) VALUES (?, ?)";
 
-  db.query(SQL, [uuid, url], (err) => {
+  db.run(SQL, [uuid, url], (err) => {
     if (err) {
       console.error("Error while inserting data:", err);
       return res.status(500).json({ error: "Database error" });

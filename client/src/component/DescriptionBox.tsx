@@ -11,23 +11,28 @@ const DescriptionBox = () => {
     const zAxis: number = useStore(state => state.zAxis);
     const vertexCount: number = useStore(state => state.vertexCount);
     const surfaceArea: number = useStore(state => state.surfaceArea);
+    
+
+   
 
   return (
     <div
-        className="w-full h-full text-white"
+      id="description-box"
+        className=" h-full text-white ml-10"
         >
            <p className="p-2 text-xl ">Model Description:</p>
            <div
             className="p-3 text-lg space-y-2"
             >
-                <p><b>Name:</b> {name}</p>
-                <p><b>Mesh Name:</b> {meshName}</p>
-                <p><b>BBox X:</b>{xAxis}</p>
-                <p><b>BBox Y:</b>{yAxis}</p>
-                <p><b>BBox Z:</b>{zAxis}</p>
-                <p><b>Surface Area:</b>{surfaceArea}</p>
-                <p><b>Vertex Count:</b>{vertexCount}</p>
+                <p><b className="mr-5">Name:</b>{name}</p>
+                <p><b className="mr-5">Mesh Name:</b> {meshName}</p>
+                <p><b className="mr-5">BBox X:</b>{xAxis}</p>
+                <p><b className="mr-5">BBox Y:</b>{yAxis}</p>
+                <p><b className="mr-5">BBox Z:</b>{zAxis}</p>
+                <p><b className="mr-5">Surface Area:</b>{surfaceArea}</p>
+                <p><b className="mr-5">Vertex Count:</b>{vertexCount}</p>
            </div>
+           
     </div>
   );
 };

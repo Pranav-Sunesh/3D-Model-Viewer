@@ -3,6 +3,7 @@ import useStore from "../store/store";
 import PopUp from "../component/PopUp";
 import JSZip from "jszip"
 import axios, { AxiosResponse } from "axios";
+import Loading from "../component/Loading";
 
 interface BufferAndImageProps {
     uri?: string;
@@ -14,20 +15,20 @@ const Upload = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const setFile: (file: File | null) => void = useStore(state => state.setFile);
     const file: File | null = useStore(state => state.file);
+    const setModelViewPage: (val: boolean) => void  = useStore(state => state.setModelViewPage);
     const setHomePage: (val: boolean) => void = useStore(state => state.setHomePage);
     const setUploadPage: (val: boolean) => void = useStore(state => state.setUploadPage);
-    const [isDragging, setIsDragging] = useState<boolean>(false)    //For tracking File dragging
+    const [isDragging, setIsDragging] = useState<boolean>(false)   
     const [noification, setNotification] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
 
-    console.log(file?.name);
 
     const navigateToHome = (): void => {
         setFile(null);
         setUploadPage(false);
         setHomePage(true);
     }
-    const navigateToModelDescription = async(): Promise<void> => {
+    const navigateToModelView = async(): Promise<void> => {
         const formData = new FormData();
         if(file){
             try {
@@ -40,7 +41,7 @@ const Upload = () => {
                     setNotification('');
                     setFile(null);
                     setUploadPage(false);
-                    setHomePage(true);
+                    setModelViewPage(true);
                     setLoading(false);
                 }, 2000);
                 
@@ -184,6 +185,14 @@ const Upload = () => {
                 <div
                     className="bg-black w-1/2 h-full rounded-2xl"
                     >
+                        {loading &&
+                            (<div    
+                            className="absolute inset-0 bg-black/50 z-10 flex items-center justify-center"
+                            >
+                            <div className="w-32 h-32">
+                                <Loading />
+                            </div>
+                        </div>)}
                         <p
                             className="text-white p-10 text-xl"
                             >
@@ -230,7 +239,7 @@ const Upload = () => {
             >
                 <button
                     disabled={loading}
-                    onClick={navigateToModelDescription}
+                    onClick={navigateToModelView}
                     className={`py-3 px-3 rounded text-white shadow transition
                        ${loading? "bg-blue-200  hover:bg-blue-200": "bg-blue-500  hover:bg-blue-600"}  `}
                     >Upload</button>
