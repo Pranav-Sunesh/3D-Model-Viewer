@@ -4,6 +4,6 @@ This web application allows users to view, upload, and manage 3D models. It uses
 ***
 <h3>Setup Instructions</h3>
 <h4>Installation</h4>
-```bash
+```
 git clone https://github.com/Pranav-Sunesh/3D-Model-Viewer.git
 ```
