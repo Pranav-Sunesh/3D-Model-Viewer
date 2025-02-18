@@ -6,6 +6,7 @@ import Loading from "../component/Loading";
 import { ModelType } from "../types";
 import axios, { AxiosResponse } from "axios";
 import useFileExits from "../hooks/useFileExits";
+import ErrorBoundary from "../component/ErrorBoundaries";
 
 const ModelView = () => {
 
@@ -64,12 +65,14 @@ const ModelView = () => {
                     className="w-2/3 h-full bg-white rounded flex justify-center items-center"
                     >
                       <Suspense fallback={<Loading />}>
+                      <ErrorBoundary>
                         {
                           fileExist?
                           <Model model={modelUrl}/>
                           :
                           <p>File not available</p>
                         }
+                        </ErrorBoundary>
                       </Suspense>
                   </div>
 

@@ -19,5 +19,3 @@ db.run(createNewTable, (err) => {
         console.log("Table created or already exists");
     }
 })
-
-
